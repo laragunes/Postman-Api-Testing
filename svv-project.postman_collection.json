@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "22a06243-ec81-4eaf-a3b5-1aafa5011816",
+		"name": "svv-project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50966146",
+		"_collection_link": "https://maryam-1624111.postman.co/workspace/7d133daa-0249-479f-8bfb-e9e9ab7915b1/collection/44904112-22a06243-ec81-4eaf-a3b5-1aafa5011816?action=share&source=collection_link&creator=50966146"
+	},
+	"item": [
+		{
+			"name": "get-all-posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// API status Test",
+							"pm.test(\"Status code 200\", () =>  {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// API Correctness Test",
+							"pm.test(\"Response is all the posts on the site\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an('array');",
+							"});",
+							"",
+							"// API Performance Test",
+							"pm.test(\"Response time is less than 200ms\", () => {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-post-p",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// API status Test",
+							"pm.test(\"Status code 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// API Correctness Test: it got the right post",
+							"pm.test(\"Response is correct\", function () {",
+							"    var post = pm.response.json();",
+							"    pm.expect(post).to.eql({",
+							"        userId: 1,",
+							"        id: 1,",
+							"        title:\"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",",
+							"        body:\"quia et suscipit\\nsuscipit recusandae consequuntur expedita et cum\\nreprehenderit molestiae ut ut quas totam\\nnostrum rerum est autem sunt rem eveniet architecto\"",
+							"    });",
+							"})",
+							"// API Performance Test",
+							"pm.test(\"Response time is less than 200ms\", () => {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-post-n",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//API Status Test:",
+							"pm.test(\"Post not found\", () => {",
+							"    pm.response.to.have.status(404)",
+							"})",
+							"",
+							"//API Correctness Test:",
+							"pm.test(\"Empty post\", () => {",
+							"    var non_existent_post = pm.response.json();",
+							"    pm.expect(non_existent_post).to.eql({})",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/999999",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"999999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-post-p",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//API status Test:",
+							"pm.test(\"Status code is 201\", () => {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"//API Correctness Test:",
+							" pm.test(\"post test\", () => {",
+							"    var new_post = pm.response.json();",
+							"    pm.expect(new_post.title).eql(\"Assignment Post\");",
+							"    pm.expect(new_post.body).eql(\"This is a test body.\");",
+							"    pm.expect(new_post.userId).eql(1);",
+							" })"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Assignment Post\",\n  \"body\": \"This is a test body.\",\n  \"userId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-post-n",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//API Status Test",
+							"pm.test(\"Status should be 400, failing for empty body\", () => {",
+							"    pm.response.to.have.status(400);",
+							"    //This test fails because jsonplaceholder always returns 201",
+							"});",
+							"",
+							"// API Failing Test:",
+							"pm.test(\"Error message is displayed\", () => {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data).to.have.property('error');",
+							"    //because the api doesn't handle this error it will return an object with an id property",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit-post-p",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//API Status Test:",
+							"pm.test(\"Status code should be 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// API Correctness Test:",
+							"pm.test(\"To check data was updated correctly\", () => {",
+							"    var updatedPost = pm.response.json();",
+							"    pm.expect(updatedPost.title).to.eql(\"Updated Title\");",
+							"    pm.expect(updatedPost.body).to.eql(\"This is the edited test body.\");",
+							"    pm.expect(updatedPost.userId).to.eql(1);",
+							"})",
+							"",
+							"//API Performance Test:",
+							"pm.test(\"Response time is less than 400ms\", () => {",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Updated Title\",\n  \"body\": \"This is the edited test body.\",\n  \"userId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit-post-n",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//API Status Test",
+							"pm.test(\"Status code is 404 because post does not exist\", ()=> {",
+							"    pm.response.to.have.status(404);",
+							"    //this test will fail and it will return a 500 error instead.",
+							"});",
+							"",
+							"//API Failing Test (Error Handling)",
+							"pm.test(\"Response is either empty or has error message\", () => {",
+							"    var jsondata = pm.response.json();",
+							"    pm.expect(jsondata).to.be.empty;",
+							"})",
+							"",
+							"//Performance Test:",
+							"pm.test(\"Error response returned within 500ms\", () =>{",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 9999,\n  \"title\": \"No Post\",\n  \"body\": \"This should not work.\",\n  \"userId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/9999",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"9999"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
